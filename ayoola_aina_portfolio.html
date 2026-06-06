@@ -1,0 +1,821 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ayoola Aina — Banking Technology & Operations</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #0C0F0A;
+    --bg2: #141810;
+    --bg3: #1C2118;
+    --border: rgba(255,255,255,0.08);
+    --border2: rgba(255,255,255,0.14);
+    --text: #E8EDE4;
+    --muted: #8A9484;
+    --accent: #5FBF6E;
+    --accent2: #3D8C49;
+    --accent-dim: rgba(95,191,110,0.12);
+    --serif: 'DM Serif Display', serif;
+    --sans: 'Instrument Sans', sans-serif;
+    --mono: 'DM Mono', monospace;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: var(--sans);
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    font-size: 16px;
+  }
+
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem 2.5rem;
+    background: rgba(12,15,10,0.85);
+    backdrop-filter: blur(12px);
+    border-bottom: 0.5px solid var(--border);
+  }
+
+  .nav-logo {
+    font-family: var(--mono);
+    font-size: 13px;
+    color: var(--accent);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 2rem;
+    list-style: none;
+  }
+
+  .nav-links a {
+    font-size: 13px;
+    color: var(--muted);
+    text-decoration: none;
+    letter-spacing: 0.04em;
+    transition: color 0.2s;
+  }
+
+  .nav-links a:hover { color: var(--text); }
+
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 8rem 2.5rem 4rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-grid {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(var(--border) 1px, transparent 1px),
+      linear-gradient(90deg, var(--border) 1px, transparent 1px);
+    background-size: 60px 60px;
+    mask-image: radial-gradient(ellipse 80% 60% at 50% 100%, black 30%, transparent 80%);
+    pointer-events: none;
+  }
+
+  .hero-tag {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--accent);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .hero-tag::before {
+    content: '';
+    display: block;
+    width: 24px;
+    height: 1px;
+    background: var(--accent);
+  }
+
+  h1 {
+    font-family: var(--serif);
+    font-size: clamp(3rem, 7vw, 5.5rem);
+    line-height: 1.05;
+    font-weight: 400;
+    margin-bottom: 1.5rem;
+    max-width: 820px;
+  }
+
+  h1 em {
+    font-style: italic;
+    color: var(--accent);
+  }
+
+  .hero-sub {
+    font-size: 1.05rem;
+    color: var(--muted);
+    max-width: 560px;
+    line-height: 1.7;
+    margin-bottom: 2.5rem;
+  }
+
+  .hero-cta {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .btn {
+    font-family: var(--sans);
+    font-size: 14px;
+    font-weight: 500;
+    padding: 0.7rem 1.5rem;
+    border-radius: 4px;
+    cursor: pointer;
+    text-decoration: none;
+    letter-spacing: 0.02em;
+    transition: all 0.2s;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    border: none;
+  }
+
+  .btn-primary {
+    background: var(--accent);
+    color: #0C0F0A;
+  }
+
+  .btn-primary:hover { background: #74d481; }
+
+  .btn-ghost {
+    background: transparent;
+    color: var(--text);
+    border: 0.5px solid var(--border2);
+  }
+
+  .btn-ghost:hover { border-color: var(--accent); color: var(--accent); }
+
+  .stats-bar {
+    display: flex;
+    gap: 3rem;
+    padding: 2rem 2.5rem;
+    border-top: 0.5px solid var(--border);
+    border-bottom: 0.5px solid var(--border);
+    flex-wrap: wrap;
+  }
+
+  .stat-item { display: flex; flex-direction: column; gap: 4px; }
+
+  .stat-num {
+    font-family: var(--serif);
+    font-size: 2rem;
+    color: var(--accent);
+    line-height: 1;
+  }
+
+  .stat-label {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  section {
+    padding: 5rem 2.5rem;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .section-tag {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--accent);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .section-tag::after {
+    content: '';
+    flex: 1;
+    height: 0.5px;
+    background: var(--border2);
+    max-width: 80px;
+  }
+
+  h2 {
+    font-family: var(--serif);
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 400;
+    margin-bottom: 3rem;
+    line-height: 1.15;
+  }
+
+  .expertise-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1px;
+    background: var(--border);
+    border: 0.5px solid var(--border);
+    margin-bottom: 0;
+  }
+
+  .expertise-card {
+    background: var(--bg);
+    padding: 2rem;
+    transition: background 0.2s;
+  }
+
+  .expertise-card:hover { background: var(--bg3); }
+
+  .expertise-icon {
+    width: 36px;
+    height: 36px;
+    background: var(--accent-dim);
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1.25rem;
+    font-size: 16px;
+    color: var(--accent);
+  }
+
+  .expertise-card h3 {
+    font-size: 15px;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: var(--text);
+  }
+
+  .expertise-card p {
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.6;
+  }
+
+  .timeline {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .timeline-item {
+    display: grid;
+    grid-template-columns: 200px 1px 1fr;
+    gap: 0 2rem;
+    padding-bottom: 3rem;
+  }
+
+  .timeline-item:last-child { padding-bottom: 0; }
+
+  .tl-date {
+    text-align: right;
+    padding-top: 2px;
+  }
+
+  .tl-date-text {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--muted);
+    letter-spacing: 0.06em;
+  }
+
+  .tl-line {
+    position: relative;
+    background: var(--border2);
+  }
+
+  .tl-dot {
+    position: absolute;
+    top: 6px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--accent);
+    border: 2px solid var(--bg);
+  }
+
+  .tl-line-current .tl-dot { box-shadow: 0 0 0 4px var(--accent-dim); }
+
+  .tl-content { padding-top: 0; }
+
+  .tl-role {
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 2px;
+    color: var(--text);
+  }
+
+  .tl-company {
+    font-size: 13px;
+    color: var(--accent);
+    font-family: var(--mono);
+    margin-bottom: 0.75rem;
+  }
+
+  .tl-desc {
+    font-size: 14px;
+    color: var(--muted);
+    line-height: 1.65;
+  }
+
+  .case-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1px;
+    background: var(--border);
+    border: 0.5px solid var(--border);
+  }
+
+  .case-card {
+    background: var(--bg);
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    transition: background 0.2s;
+  }
+
+  .case-card:hover { background: var(--bg2); }
+
+  .case-tag {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    color: var(--accent);
+    text-transform: uppercase;
+  }
+
+  .case-card h3 {
+    font-family: var(--serif);
+    font-size: 1.3rem;
+    font-weight: 400;
+    color: var(--text);
+    line-height: 1.25;
+  }
+
+  .case-card p {
+    font-size: 14px;
+    color: var(--muted);
+    line-height: 1.65;
+    flex: 1;
+  }
+
+  .case-metrics {
+    display: flex;
+    gap: 1.5rem;
+    padding-top: 1rem;
+    border-top: 0.5px solid var(--border);
+  }
+
+  .metric { display: flex; flex-direction: column; gap: 2px; }
+
+  .metric-val {
+    font-family: var(--serif);
+    font-size: 1.3rem;
+    color: var(--accent);
+  }
+
+  .metric-key {
+    font-size: 11px;
+    color: var(--muted);
+    font-family: var(--mono);
+    letter-spacing: 0.06em;
+  }
+
+  .skills-section {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 2rem;
+  }
+
+  .skill-group h3 {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 1rem;
+  }
+
+  .skill-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .skill-tag {
+    font-size: 13px;
+    padding: 0.3rem 0.75rem;
+    border-radius: 3px;
+    background: var(--bg3);
+    border: 0.5px solid var(--border2);
+    color: var(--text);
+  }
+
+  .contact-block {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: start;
+  }
+
+  .contact-block .left p {
+    font-size: 1.05rem;
+    color: var(--muted);
+    line-height: 1.7;
+    margin-bottom: 2rem;
+  }
+
+  .contact-links {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .contact-link {
+    font-size: 14px;
+    color: var(--muted);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    transition: color 0.2s;
+  }
+
+  .contact-link:hover { color: var(--accent); }
+
+  .contact-link-icon {
+    width: 32px;
+    height: 32px;
+    border-radius: 4px;
+    background: var(--bg3);
+    border: 0.5px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+  }
+
+  .cert-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .cert-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem 1.25rem;
+    background: var(--bg3);
+    border: 0.5px solid var(--border);
+    border-radius: 4px;
+  }
+
+  .cert-badge {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--accent);
+    background: var(--accent-dim);
+    padding: 0.25rem 0.6rem;
+    border-radius: 3px;
+    white-space: nowrap;
+    letter-spacing: 0.06em;
+  }
+
+  .cert-info h4 { font-size: 14px; font-weight: 500; }
+  .cert-info p { font-size: 12px; color: var(--muted); }
+
+  footer {
+    border-top: 0.5px solid var(--border);
+    padding: 2rem 2.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--muted);
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <span class="nav-logo">AA</span>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#work">Work</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<section class="hero" id="about">
+  <div class="hero-grid"></div>
+  <div class="hero-tag">Available for senior roles</div>
+  <h1>Banking Technology<br>& <em>Operations</em> Leader</h1>
+  <p class="hero-sub">9+ years building and running fintech infrastructure. From core banking platform administration to BaaS operations — I've set up systems that go-live and stay live.</p>
+  <div class="hero-cta">
+    <a href="#contact" class="btn btn-primary">Get in touch →</a>
+    <a href="#work" class="btn btn-ghost">View case studies</a>
+  </div>
+</section>
+
+<div class="stats-bar">
+  <div class="stat-item">
+    <span class="stat-num">9+</span>
+    <span class="stat-label">Years in fintech</span>
+  </div>
+  <div class="stat-item">
+    <span class="stat-num">5</span>
+    <span class="stat-label">Years in payment ops</span>
+  </div>
+  <div class="stat-item">
+    <span class="stat-num">1</span>
+    <span class="stat-label">Bank launched from scratch</span>
+  </div>
+  <div class="stat-item">
+    <span class="stat-num">CBN</span>
+    <span class="stat-label">Regulatory experience</span>
+  </div>
+</div>
+
+<section>
+  <div class="section-tag">Expertise</div>
+  <h2>What I bring to the table</h2>
+  <div class="expertise-grid">
+    <div class="expertise-card">
+      <div class="expertise-icon">⬡</div>
+      <h3>Core Banking Platform</h3>
+      <p>Deep hands-on experience with Mifos/Apache Fineract — GL configuration, loan product setup, standing instructions, and end-to-end lifecycle management.</p>
+    </div>
+    <div class="expertise-card">
+      <div class="expertise-icon">⟳</div>
+      <h3>Payment Operations</h3>
+      <p>BaaS operations, NIBSS/NIP rail integration, transaction monitoring, payment reconciliation, and acceptance rate optimisation.</p>
+    </div>
+    <div class="expertise-card">
+      <div class="expertise-icon">◈</div>
+      <h3>Digital Transformation</h3>
+      <p>Led technology setup for a microfinance bank from inception through CBN regulatory launch — infrastructure, operations, and compliance readiness.</p>
+    </div>
+    <div class="expertise-card">
+      <div class="expertise-icon">◎</div>
+      <h3>Risk & Compliance</h3>
+      <p>Working knowledge of CBN frameworks, AML/KYC operations, PCI-DSS awareness, and ITIL-certified service management practices.</p>
+    </div>
+    <div class="expertise-card">
+      <div class="expertise-icon">⊞</div>
+      <h3>Team Leadership</h3>
+      <p>Technical team lead experience spanning application support, database administration, and cross-functional fintech operations.</p>
+    </div>
+    <!-- <div class="expertise-card">
+      <div class="expertise-icon">∿</div>
+      <h3>Data & Analytics</h3>
+      <p>SQL, database administration, operational metrics tracking, and building structured reporting frameworks for fintech products.</p>
+    </div> -->
+  </div>
+</section>
+
+<section id="experience" style="border-top: 0.5px solid var(--border);">
+  <div class="section-tag">Timeline</div>
+  <h2>Where I've worked</h2>
+  <div class="timeline">
+
+    <div class="timeline-item">
+      <div class="tl-date"><span class="tl-date-text">2023 — Present</span></div>
+      <div class="tl-line tl-line-current"><div class="tl-dot"></div></div>
+      <div class="tl-content">
+        <div class="tl-role">Core Banking Platform Lead</div>
+        <div class="tl-company">Katsu Microfinance Bank · SABI Africa</div>
+        <div class="tl-desc">Led full technology setup from inception through CBN regulatory launch. Administered the Mifos/Fineract platform, configured GL accounting, built loan product documentation, and set up standing instructions for automated repayment. First mover on every ops and infrastructure decision at the bank.</div>
+      </div>
+    </div>
+
+    <div class="timeline-item">
+      <div class="tl-date"><span class="tl-date-text">2021 — 2023</span></div>
+      <div class="tl-line"><div class="tl-dot"></div></div>
+      <div class="tl-content">
+        <div class="tl-role">BaaS Operations / Application Support</div>
+        <div class="tl-company">VFD Tech</div>
+        <div class="tl-desc">Handled BaaS platform operations and application support, working across payment integrations and live transaction environments. Supported API-driven banking products used by third-party businesses building on VFD's infrastructure.</div>
+      </div>
+    </div>
+
+    <div class="timeline-item">
+      <div class="tl-date"><span class="tl-date-text">2017 — 2021</span></div>
+      <div class="tl-line"><div class="tl-dot"></div></div>
+      <div class="tl-content">
+        <div class="tl-role">Application Support Team Lead · DBA</div>
+        <div class="tl-company">Abbey Mortgage Bank PLC</div>
+        <div class="tl-desc">Managed application support and database administration for a licensed mortgage bank. Led the support team, handled incident resolution, maintained core systems uptime, and worked closely with engineering on platform reliability.</div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<section id="work" style="border-top: 0.5px solid var(--border);">
+  <div class="section-tag">Case studies</div>
+  <h2>Selected work</h2>
+  <div class="case-grid">
+    <div class="case-card">
+      <div class="case-tag">Core Banking · Regulatory</div>
+      <h3>Katsu MFB — Bank Launch from Zero</h3>
+      <p>Led all technology and operations setup for a new microfinance bank, taking the platform from blank infrastructure to CBN-approved live operations. Covered Fineract configuration, GL chart of accounts, loan products, and compliance documentation.</p>
+      <div class="case-metrics">
+        <div class="metric">
+          <span class="metric-val">0→1</span>
+          <span class="metric-key">Bank built</span>
+        </div>
+        <div class="metric">
+          <span class="metric-val">CBN</span>
+          <span class="metric-key">Regulatory launch</span>
+        </div>
+      </div>
+    </div>
+    <div class="case-card">
+      <div class="case-tag">GL Accounting · Documentation</div>
+      <h3>Fineract GL System — Full Accounting Coverage</h3>
+      <p>Built a five-part GL accounting guide covering the full chart of accounts, loan product mapping, and all transaction lifecycle journal entries for debit, credit, prepayment, write-off, and recovery scenarios. Used as the bank's operational reference.</p>
+      <div class="case-metrics">
+        <div class="metric">
+          <span class="metric-val">5</span>
+          <span class="metric-key">Part guide</span>
+        </div>
+        <div class="metric">
+          <span class="metric-val">Full</span>
+          <span class="metric-key">Lifecycle coverage</span>
+        </div>
+      </div>
+    </div>
+    <div class="case-card">
+      <div class="case-tag">BaaS · Payment Infrastructure</div>
+      <h3>BaaS Operations — VFD Tech</h3>
+      <p>Operated and supported a live BaaS platform processing real payment transactions for third-party businesses. Handled integration support, incident management, and API troubleshooting across multiple business clients building on VFD's rails.</p>
+      <div class="case-metrics">
+        <div class="metric">
+          <span class="metric-val">BaaS</span>
+          <span class="metric-key">Platform ops</span>
+        </div>
+        <div class="metric">
+          <span class="metric-val">Live</span>
+          <span class="metric-key">Payment rails</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section style="border-top: 0.5px solid var(--border);">
+  <div class="section-tag">Stack</div>
+  <h2>Tools & technologies</h2>
+  <div class="skills-section">
+    <div class="skill-group">
+      <h3>Core Banking</h3>
+      <div class="skill-tags">
+        <span class="skill-tag">Mifos</span>
+        <span class="skill-tag">Apache Fineract</span>
+        <span class="skill-tag">EazybankAX</span>
+        <span class="skill-tag">Orbit</span>
+        <span class="skill-tag">GL Configuration</span>
+        <span class="skill-tag">General CBA Administration & Configuration</span>
+        <span class="skill-tag">Product Setup & Configuration</span>
+      </div>
+    </div>
+    <div class="skill-group">
+      <h3>Payments & BaaS</h3>
+      <div class="skill-tags">
+        <span class="skill-tag">NIBSS/NIP</span>
+        <span class="skill-tag">BaaS Operations</span>
+        <span class="skill-tag">Payment Rails</span>
+        <span class="skill-tag">API Integration</span>
+        <span class="skill-tag">Reconciliation</span>
+      </div>
+    </div>
+    <div class="skill-group">
+      <h3>Operations</h3>
+      <div class="skill-tags">
+        <span class="skill-tag">Process Documentation</span>
+        <span class="skill-tag">Incident Management</span>
+        <span class="skill-tag">SLA Management</span>
+        <span class="skill-tag">ITIL Foundation</span>
+        
+      </div>
+    </div>
+    <div class="skill-group">
+      <h3>Technical</h3>
+      <div class="skill-tags">
+        <span class="skill-tag">Database Administration</span>
+        <span class="skill-tag">Application Support</span>
+        <span class="skill-tag">Operations</span>
+      </div>
+    </div>
+    <div class="skill-group">
+      <h3>Compliance</h3>
+      <div class="skill-tags">
+        <span class="skill-tag">CBN Frameworks & Policies/Guidelines</span>
+        <span class="skill-tag">Regulatory Ops</span>
+        <span class="skill-tag">AML/KYC</span>
+        <span class="skill-tag">PCI-DSS Awareness</span>
+        <span class="skill-tag">ISO 27001</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section style="border-top: 0.5px solid var(--border);">
+  <div class="section-tag">Credentials</div>
+  <h2>Education & certifications</h2>
+  <div class="cert-list">
+    <div class="cert-item">
+      <span class="cert-badge">CERT</span>
+      <div class="cert-info">
+        <h4>ITIL Foundation</h4>
+        <p>IT Service Management certification</p>
+      </div>
+    </div>
+    <div class="cert-item">
+      <span class="cert-badge">BSc</span>
+      <div class="cert-info">
+        <h4>Bachelor of Science — Computer Science</h4>
+        <p>University of the People · In progress</p>
+      </div>
+    </div>
+    <div class="cert-item">
+      <span class="cert-badge">HND</span>
+      <div class="cert-info">
+        <h4>Higher National Diploma — Computer Science</h4>
+        <p>Yaba College of Technology</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="contact" style="border-top: 0.5px solid var(--border);">
+  <div class="section-tag">Contact</div>
+  <div class="contact-block">
+    <div class="left">
+      <h2>Let's talk</h2>
+      <p>Open to senior fintech and banking technology roles — remote or Lagos-based. If you're building payment infrastructure or scaling an ops team, reach out.</p>
+      <div class="contact-links">
+        <a href="mailto:ayoolaina@gmail.com" class="contact-link">
+          <span class="contact-link-icon">✉</span>
+          ayoolaina@gmail.com
+        </a>
+        <a href="https://www.linkedin.com/in/ayoola-aina-10940976/" class="contact-link" target="_blank" rel="noopener noreferrer">
+          <span class="contact-link-icon">in</span>
+          linkedin.com/in/ayoola-aina-10940976/
+        </a>
+        <a href="https://maps.google.com/?q=Lagos,+Nigeria" class="contact-link" target="_blank" rel="noopener noreferrer">
+          <span class="contact-link-icon">📍</span>
+          Lagos, Nigeria
+        </a>
+      </div>
+    </div>
+    <div class="right">
+      <div style="background: var(--bg3); border: 0.5px solid var(--border2); border-radius: 4px; padding: 2rem;">
+        <p style="font-family: var(--mono); font-size: 12px; color: var(--muted); margin-bottom: 1rem; letter-spacing: 0.06em; text-transform: uppercase;">Currently</p>
+        <p style="font-size: 15px; margin-bottom: 0.5rem; font-weight: 500;">Core Banking Platform Lead</p>
+        <p style="font-size: 13px; color: var(--accent); font-family: var(--mono); margin-bottom: 1.5rem;">Katsu Microfinance Bank</p>
+        <p style="font-size: 13px; color: var(--muted); line-height: 1.65;">Open to new opportunities. Particularly interested in payment operations leadership and fintech infrastructure roles at scale.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <span>Ayoola Aina · Lagos, Nigeria</span>
+  <span>Banking Technology & Operations</span>
+</footer>
+
+</body>
+</html>
